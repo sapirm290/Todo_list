@@ -1,9 +1,9 @@
 import React from 'react'
 
-function CreateItem() {
+function CreateItem({children}) {
     return (
         <div>
-            
+            {children}
         </div>
     )
 }
