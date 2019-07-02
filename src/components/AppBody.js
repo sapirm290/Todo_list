@@ -8,7 +8,6 @@ import { palette, spacing } from '@material-ui/system';
 import { styled } from '@material-ui/styles';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 
 function AppBody({ todoList, doneList, itemActions }) {
     //     const Box = styled.div`
@@ -21,7 +20,7 @@ function AppBody({ todoList, doneList, itemActions }) {
         lists[key] = [];
         for (let index = 0; index < logicLists[key].length; index++) {
             lists[key].push(
-                <TodoItem key={logicLists[key][index].key} todoItem={logicLists[key][index]} />
+                <TodoItem key={logicLists[key][index].key} index={logicLists[key][index].key} todoItem={logicLists[key][index]} removeItem={itemActions.removeItem} />
             )
         }
     }
