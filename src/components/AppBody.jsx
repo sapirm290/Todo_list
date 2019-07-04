@@ -11,7 +11,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import Drawer from '@material-ui/core/Drawer';
-
+import AppHeader from "./AppHeader"
+import TodoItemWrapper from './TodoItemContainer'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -23,19 +24,18 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function AppBody({ todoList, doneList, itemActions }) {
+function AppBody({ listsForRender, itemActions }) {
     //     const Box = styled.div`
     //   ${palette}
     //   ${spacing}
     // `;
-    const logicLists = { todoList: todoList, doneList: doneList };
+    const logicLists = { todoList: listsForRender[0], doneList: listsForRender[1] };
     const lists = {};
     for (const key in logicLists) {
         lists[key] = [];
         for (let index = 0; index < logicLists[key].length; index++) {
             lists[key].push(
-
-                <TodoItem key={logicLists[key][index].key} index={logicLists[key][index].key} todoItem={logicLists[key][index]} removeItem={itemActions.removeItem} />
+                <TodoItemWrapper index={logicLists[key][index].index} key={logicLists[key][index].index} />
             )
         }
     }
@@ -43,16 +43,17 @@ function AppBody({ todoList, doneList, itemActions }) {
     const classes = useStyles();
     return (
         <React.Fragment>
+            <AppHeader>
+            </AppHeader>
             <Container className={classes.root} maxWidth="md" >
 
-                <CreateItem addItem={itemActions.addItem}>
+                <CreateItem>
                 </CreateItem>
                 <Box variant="contained" color="secondary" p={3} >
                     <Typography variant="h5" color="primary" className={classes.title}> To-do :</Typography>
                     {lists["todoList"]}
                 </Box>
                 <List>
-
 
                 </List>
                 <Divider />
@@ -61,6 +62,7 @@ function AppBody({ todoList, doneList, itemActions }) {
 
                     {lists["doneList"]}
                 </Box>
+
             </Container>
         </React.Fragment>
     )
