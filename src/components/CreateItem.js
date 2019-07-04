@@ -5,16 +5,16 @@ import TextField from '@material-ui/core/TextField';
 
 
 function CreateItem({ addItem }) {
-    const [task, setTask] = useState({ description: "", due: "" })
+    const [task, setTask] = useState({ description: "I need to do what?...", due: "At what time? " })
     return (
         <div>
             <Box color="secondary" bgcolor="primary" p={3} m={2}>
-                <TextField onChange={(e) => { setTask({...task, description: e.target.value }) }}
-                    value={task.description} floatingLabelText="Description"
-                    defaultValue="Buy food for home" />
-                <TextField hintText="Due time" floatingLabelText="Due time"
-                    onChange={(e) => { setTask({...task, due: e.target.value }) }}
-                    value={task.due} defaultValue="July 5 2019" />
+                <TextField onChange={(e) => { setTask({ ...task, description: e.target.value }) }}
+                    value={task.description}
+                />
+                <TextField
+                    onChange={(e) => { setTask({ ...task, due: e.target.value }) }}
+                    value={task.due} />
                 <Button variant="contained" color="primary" onClick={() => { addItem(task.description, task.due) }}>Add Item</Button>
             </Box>
         </div>

@@ -6,10 +6,8 @@ import AppBody from './AppBody';
 const AppContainer = () => {
     const [list, setList] = useState(
         [
-            { key: 0, description: "Todo example", due: "September 14 2015", isDone: false, isStarred: true },
-            { key: 1, description: "Todo example", due: "September 14 2015", isDone: true, isStarred: true },
-            { key: 2, description: "Buy groceries", due: "July 14 2015", isDone: false, isStarred: true },
-            { key: 3, description: "Eat cornflakes", due: "February 12 2015", isDone: true, isStarred: false }
+            { key: 0, description: "Todo item example", due: "September 14 2015", isDone: false, isStarred: true },
+            { key: 1, description: "Done item example", due: "September 14 2015", isDone: true, isStarred: false },
         ]
     )
     const [key, setKey] = useState(4);
@@ -21,7 +19,7 @@ const AppContainer = () => {
     }
 
     const removeItem = (itemkey) => {
-            const newList = list.filter(item => item.key != itemkey)
+            const newList = list.filter(item => item.key !== itemkey)
             setList(newList);
     }
     // const setItemStarred = (itemkey) => {
