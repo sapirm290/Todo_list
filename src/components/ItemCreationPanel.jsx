@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
 
-function CreateItem({ addItem }) {
+function ItemCreationPanel({ addItem }) {
     const [task, setTask] = useState({ description: "I need to do what?...", due: "At what time? " })
     return (
         <div>
@@ -15,10 +15,10 @@ function CreateItem({ addItem }) {
                 <TextField
                     onChange={(e) => { setTask({ ...task, due: e.target.value }) }}
                     value={task.due} />
-                <Button variant="contained" color="primary" onClick={() => { addItem(task.description, task.due) }}>Add Item</Button>
+                <Button variant="contained" color="primary" onClick={() => { addItem(task) }}>Add Item</Button>
             </Box>
         </div>
     )
 }
 
-export default CreateItem
+export default ItemCreationPanel

@@ -1,7 +1,6 @@
 import React from 'react'
 import Container from '@material-ui/core/Container';
 import TodoItem from './TodoItem';
-import CreateItem from "./CreateItem"
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import { palette, spacing } from '@material-ui/system';
@@ -13,6 +12,8 @@ import List from '@material-ui/core/List';
 import Drawer from '@material-ui/core/Drawer';
 import AppHeader from "./AppHeader"
 import TodoItemWrapper from './TodoItemContainer'
+import ItemCreationContainer from './ItemCreationContainer';
+import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -24,7 +25,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function AppPresentational({ listsForRendering, itemActions }) {
+function AppPresentational({ listsForRendering, saveTasks, loadTasks }) {
     const classes = useStyles();
 
     //     const Box = styled.div`
@@ -47,11 +48,13 @@ function AppPresentational({ listsForRendering, itemActions }) {
     return (
         <React.Fragment>
             <AppHeader>
+
             </AppHeader>
             <Container className={classes.root} maxWidth="md" >
-
-                <CreateItem>
-                </CreateItem>
+                <Button onClick={saveTasks}>Save</Button>
+                <Button onClick={loadTasks}>Load</Button>
+                <ItemCreationContainer>
+                </ItemCreationContainer>
                 <Box variant="contained" color="secondary" p={3} >
                     <Typography variant="h5" color="primary" className={classes.title}> To-do :</Typography>
                     {lists["todoList"]}
