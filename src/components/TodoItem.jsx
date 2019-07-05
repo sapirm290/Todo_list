@@ -34,7 +34,7 @@ const TodoItem = ({ due, description, isStarred, index, removeItem, setItemDone,
     return (
         <React.Fragment>
             <ListItem button={true} className={classes.root} divider={true} onClick={(e) => setItemDone(index, e)}>
-                <IconButton edge="end" aria-label="Delete" onClick={(e) => setItemStarred(index, e)}>
+                <IconButton onClick={(e) => setItemStarred(index, e)}>
                     <SvgIcon>
                         <path fill={isStarred ? "#FFD700" : "#FFFFFF"} d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
                     </SvgIcon>

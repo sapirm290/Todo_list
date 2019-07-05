@@ -35,16 +35,16 @@ const mapDispatchToProps = dispatch => {
             dispatch(setItemDoneAction(index))
         },
         setItemStarred: (index, e) => {
-            if (typeof e != 'undefined')
-                e.stopPropagation();
+            // if (typeof e != 'undefined')
+            //     e.stopPropagation();
             dispatch(setItemStarredAction(index))
         }
     }
 }
 
 const mapStateToProps = (state, props) => {
-    let todoItemObject = state.todos.find(element => element.index === props.index)
-    return todoItemObject
+    let taskObject = state.todos.find(element => element.index === props.index)
+    return taskObject
 }
 
 const TodoItemWrapper = connect(

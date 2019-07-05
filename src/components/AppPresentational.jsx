@@ -39,7 +39,7 @@ function AppPresentational({ listsForRendering, itemActions }) {
         lists[key] = [];
         for (let index = 0; index < logicLists[key].length; index++) {
             lists[key].push(
-                <TodoItemWrapper index={logicLists[key][index].index} key={logicLists[key][index].index} />
+                <TodoItemWrapper index={logicLists[key][index]} key={logicLists[key][index]} />
             )
         }
     }
