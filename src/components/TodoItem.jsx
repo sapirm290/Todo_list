@@ -33,27 +33,21 @@ const TodoItem = ({ due, description, isStarred, index, removeItem, setItemDone,
     const classes = useStyles();
     return (
         <React.Fragment>
-            <ListItem button={true} className={classes.root} divider={true} onClick={setItemDone(index)}>
-
-                <IconButton edge="end" aria-label="Delete" onClick={() => { setItemStarred(index) }}>
+            <ListItem button={true} className={classes.root} divider={true} onClick={(e) => setItemDone(index, e)}>
+                <IconButton edge="end" aria-label="Delete" onClick={(e) => setItemStarred(index, e)}>
                     <SvgIcon>
-
-                        {isStarred ? <path fill="#FFD700" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
-                            : <path fill="#FFFFFF" d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />}
+                        <path fill={isStarred ? "#FFD700" : "#FFFFFF"} d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
                     </SvgIcon>
-
                 </IconButton>
-                <ListItemText primary={`${description} ${due}`}
-                />
-
+                <ListItemText primary={`${description} ${due}`} />
                 <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="Delete" onClick={() => { removeItem(index) }}>
+                    <IconButton edge="end" aria-label="Delete" onClick={(e) => removeItem(index, e)}>
                         <DeleteIcon />
                     </IconButton>
                 </ListItemSecondaryAction>
             </ListItem>
             {/* <Divider /> */}
-        </React.Fragment>
+        </React.Fragment >
     )
 }
 

@@ -24,12 +24,16 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function AppBody({ listsForRender, itemActions }) {
+function AppPresentational({ listsForRendering, itemActions }) {
+    const classes = useStyles();
+
     //     const Box = styled.div`
     //   ${palette}
     //   ${spacing}
     // `;
-    const logicLists = { todoList: listsForRender[0], doneList: listsForRender[1] };
+    console.log("current lists:");
+    console.log(listsForRendering)
+    const logicLists = { todoList: listsForRendering[0], doneList: listsForRendering[1] };
     const lists = {};
     for (const key in logicLists) {
         lists[key] = [];
@@ -40,7 +44,6 @@ function AppBody({ listsForRender, itemActions }) {
         }
     }
 
-    const classes = useStyles();
     return (
         <React.Fragment>
             <AppHeader>
@@ -68,4 +71,4 @@ function AppBody({ listsForRender, itemActions }) {
     )
 }
 
-export default AppBody
+export default AppPresentational

@@ -1,7 +1,7 @@
 import React from 'react'
-import AppBody from './AppBody';
+import AppPresentational from './AppPresentational';
 import { createStore } from 'redux'
-import { Provider } from 'react-redux'
+import { Provider, connect } from 'react-redux'
 import { element } from 'prop-types';
 
 const REMOVE = "REMOVE"
@@ -41,16 +41,27 @@ const AppContainer = () => {
         ]
     }
     const rootReducer = (state = initialState, action) => {
+        let newState;
         switch (action.type) {
             case (REMOVE):
-                let newState = Object.assign({}, state)
-                // newState.todos.find(element => element.index === action.index)
-                let positionToRemove = newState.todos.indexOf(element => element.index === action.index)
-                newState.todos.splice(positionToRemove,1)
+                newState = Object.assign({}, state)
+                let indexToRemove = newState.todos.indexOf(element => element.index === action.index)
+                newState.todos.splice(indexToRemove, 1)
                 console.log(newState);
                 return newState;
-                // case (SETDONE)
-                // case (SETSTARRED):
+            case (SETDONE):
+                newState = Object.assign({}, state)
+
+                let indexToSetDone = newState.todos.indexOf(newState.todos.find(element => element.index === action.index))
+                console.log(action.index);
+                console.log(indexToSetDone);
+                newState.todos[indexToSetDone].isDone = !newState.todos[indexToSetDone].isDone;
+                return newState
+            case (SETSTARRED):
+                newState = Object.assign({}, state)
+                let indexToSetStarred = newState.todos.indexOf(newState.todos.find(element => element.index === action.index))
+                newState.todos[indexToSetStarred].isStarred = !newState.todos[indexToSetStarred].isStarred;
+                return newState
             default:
                 return state;
         }
@@ -58,16 +69,22 @@ const AppContainer = () => {
     }
 
     const store = createStore(rootReducer);
-    console.log(store.getState());
-    let listsForRender = [
-        store.getState().todos.filter(item => item.isDone === true),
-        store.getState().todos.filter(item => item.isDone === false)
-    ]
+
+    const mapStateToProps = (state) => {
+        let listsForRendering = [
+            store.getState().todos.filter(item => item.isDone),
+            store.getState().todos.filter(item => !item.isDone)
+        ]
+        return { listsForRendering: listsForRendering }
+    }
+    const ConnectedApp = connect(
+        mapStateToProps,
+        null
+    )(AppPresentational)
+
     return (
         <Provider store={store}>
-            <AppBody
-                // logicLists={[list.filter(item => item.isDone === true), list.filter(item => item.isDone === false)]}
-                listsForRender={listsForRender} />
+            <ConnectedApp />
         </Provider>
 
     )

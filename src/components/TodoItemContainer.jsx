@@ -24,21 +24,27 @@ const setItemStarredAction = (index) => {
 }
 const mapDispatchToProps = dispatch => {
     return {
-        removeItem: (index) => {
+        removeItem: (index, e) => {
+            if (typeof e != 'undefined')
+                e.stopPropagation();
             dispatch(removeItemAction(index))
         },
-        setItemDone: (index) => {
+        setItemDone: (index, e) => {
+            if (typeof e != 'undefined')
+                e.stopPropagation();
             dispatch(setItemDoneAction(index))
         },
-        setItemStarred: (index) => {
+        setItemStarred: (index, e) => {
+            if (typeof e != 'undefined')
+                e.stopPropagation();
             dispatch(setItemStarredAction(index))
         }
     }
 }
 
 const mapStateToProps = (state, props) => {
-    let itemObject = state.todos.find(element => element.index === props.index)
-    return itemObject
+    let todoItemObject = state.todos.find(element => element.index === props.index)
+    return todoItemObject
 }
 
 const TodoItemWrapper = connect(
