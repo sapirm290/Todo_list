@@ -20,7 +20,7 @@ export default function AppHeader() {
       <AppBar position="static" color="primary">
         <Toolbar>
           <Typography variant="h6" color="initial">
-            Planner
+            Goals
           </Typography>
           <SvgIcon>
             <path fill="#FFFFFF" d="M19,19H5V8H19M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,

@@ -2,6 +2,7 @@ import React from 'react'
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import ListItem from '@material-ui/core/ListItem';
+import ListSubheader from '@material-ui/core/ListSubheader';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
@@ -16,7 +17,12 @@ import FolderIcon from '@material-ui/icons/Folder';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import { makeStyles } from '@material-ui/core/styles';
-
+import { ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Collapse, List } from '@material-ui/core';
+import StarBorder from '@material-ui/icons/StarBorder';
+import { ExpandMore, ExpandLess } from '@material-ui/icons';
+import DraftsIcon from '@material-ui/icons/Drafts';
+import SendIcon from '@material-ui/icons/Send';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -24,16 +30,84 @@ const useStyles = makeStyles(theme => ({
     },
     root: {
         listStyleType: "none",
-        backgroundColor: theme.palette.secondary.light,
+        // color: "ffffff",
+
+        // margin: "10px"
+        // textDecoration: "line-through"
+    },
+    li:{
+        display: "block"
     }
 }));
+const DIVSTYLE = { margin: "10px", borderRadius: "10px", backgroundColor: "#b0bec5" }
 
 
 const TodoItem = ({ due, description, isStarred, index, removeItem, setItemDone, setItemStarred }) => {
     const classes = useStyles();
-    return (
-        <React.Fragment>
-            <ListItem button={true} className={classes.root} divider={true} onClick={(e) => setItemDone(index, e)}>
+
+    const [open, setOpen] = React.useState(false);
+
+    function handleClick() {
+        setOpen(!open);
+    } return (
+        <div style={DIVSTYLE}>
+            <ListItem button classes={{ root: classes.root, container: classes.li }} onClick={handleClick}>
+                {open ? <ExpandLess /> : <ExpandMore />}
+                <ListItemText primary={`${description} ${due}`} />
+                <ListItemSecondaryAction>
+                    <IconButton edge="end" aria-label="Delete" onClick={(e) => removeItem(index, e)}>
+                        <DeleteIcon />
+                    </IconButton>
+                    <Button variant="contained" color="primary" onClick={(e) => setItemDone(index, e)}>Done!</Button>
+                </ListItemSecondaryAction>
+            </ListItem>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+                <ListItem button onClick={handleClick} classes={{ root: classes.root, container: classes.li }}>
+                    <ListItemText primary="Starred" />
+                    <ListItemSecondaryAction>
+                        <IconButton onClick={(e) => setItemStarred(index, e)}>
+                            <SvgIcon>
+                                <path fill={isStarred ? "#FFD700" : "#FFFFFF"} d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
+                            </SvgIcon>
+                        </IconButton>
+                    </ListItemSecondaryAction>
+                </ListItem>
+            </Collapse>
+        </div>
+    );
+}
+
+// <React.Fragment>
+
+
+//  <ListItem button={true}
+//     // onClick={(e) => setItemDone(index, e)}
+//     >
+//         <IconButton onClick={(e) => setItemStarred(index, e)}>
+//             <SvgIcon>
+//                 <path fill={isStarred ? "#FFD700" : "#FFFFFF"} d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
+//             </SvgIcon>
+//         </IconButton>
+//         <ListItemText primary={`${description} ${due}`} />
+//         <ListItemSecondaryAction>
+//             <IconButton edge="end" aria-label="Delete" onClick={(e) => removeItem(index, e)}>
+//                 <DeleteIcon />
+//             </IconButton>
+//         </ListItemSecondaryAction>
+//     </ListItem>
+//     <Collapse in={true} timeout="auto" unmountOnExit>
+//         <List component="div" disablePadding>
+//             <ListItem button className={classes.nested}>
+//                 <ListItemIcon>
+//                     <StarBorder />
+//                     <Typography>dsa</Typography>
+//                 </ListItemIcon>
+//                 <ListItemText primary="Starred" >dsad</ListItemText>
+//             </ListItem>
+//         </List>
+//     </Collapse>
+
+{/* <ListItem button={true} className={classes.root} divider={true} onClick={(e) => setItemDone(index, e)}>
                 <IconButton onClick={(e) => setItemStarred(index, e)}>
                     <SvgIcon>
                         <path fill={isStarred ? "#FFD700" : "#FFFFFF"} d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
@@ -46,9 +120,9 @@ const TodoItem = ({ due, description, isStarred, index, removeItem, setItemDone,
                     </IconButton>
                 </ListItemSecondaryAction>
             </ListItem>
-            {/* <Divider /> */}
-        </React.Fragment >
-    )
-}
+            <Divider /> */}
+// </React.Fragment >
+
+
 
 export default TodoItem

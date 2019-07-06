@@ -51,7 +51,7 @@ function AppPresentational({ listsForRendering, saveTasks, loadTasks }) {
 
             </AppHeader>
             <Container className={classes.root} maxWidth="md" >
-                <Button onClick={saveTasks}>Save</Button>
+                <Button onClick={saveTasks}>Save in local storage</Button>
                 <Button onClick={loadTasks}>Load</Button>
                 <ItemCreationContainer>
                 </ItemCreationContainer>
