@@ -14,7 +14,11 @@ const AppContainer = () => {
     const initialState = {
         taskIndex: 1,
         todos: [
-            { index: 0, description: "Todo item example1", due: "September 14 2015", isDone: false, isStarred: true },
+            {
+                content: { summary: "Example", description: "Description example" },
+                time: { years: 2019, months: 7, days: 6, hours: 14, minutes: 27 },
+                features: { index: 0, category: "todo", isStarred: false }
+            }
         ]
     }
     const rootReducer = (state = initialState, action) => {
@@ -29,27 +33,31 @@ const AppContainer = () => {
                 return state
             case (ADD):
                 newState = Object.assign({}, state)
-                newState.todos.push({ description: action.description, due: action.due, index: newState.taskIndex, isDone: false, isStarred: false })
+                newState.todos.push({
+                    content: { summary: action.item.content.summary, description: action.item.content.description },
+                    time: {
+                        years: action.item.time.years, months: action.item.time.months, days: action.item.time.days,
+                        hours: action.item.time.hours, minutes: action.item.time.minutes
+                    },
+                    features: { index: newState.taskIndex, isStarred: false, category: "todo" }
+                })
                 newState.taskIndex++;
                 return newState
             case (REMOVE):
                 newState = Object.assign({}, state)
-                let indexToRemove = newState.todos.indexOf(element => element.index === action.index)
+                let indexToRemove = newState.todos.indexOf(element => element.features.index === action.index)
                 newState.todos.splice(indexToRemove, 1)
                 console.log(newState);
                 return newState;
             case (SETDONE):
                 newState = Object.assign({}, state)
-
-                let indexToSetDone = newState.todos.indexOf(newState.todos.find(element => element.index === action.index))
-                console.log(action.index);
-                console.log(indexToSetDone);
-                newState.todos[indexToSetDone].isDone = !newState.todos[indexToSetDone].isDone;
+                let indexToSetDone = newState.todos.indexOf(newState.todos.find(element => element.features.index === action.index))
+                newState.todos[indexToSetDone].features.category = newState.todos[indexToSetDone].features.category === "todo" ? "done" : "todo";
                 return newState
             case (SETSTARRED):
                 newState = Object.assign({}, state)
-                let indexToSetStarred = newState.todos.indexOf(newState.todos.find(element => element.index === action.index))
-                newState.todos[indexToSetStarred].isStarred = !newState.todos[indexToSetStarred].isStarred;
+                let indexToSetStarred = newState.todos.indexOf(newState.todos.find(element => element.features.index === action.index))
+                newState.todos[indexToSetStarred].features.isStarred = !newState.todos[indexToSetStarred].features.isStarred;
                 return newState
 
             default:
@@ -62,17 +70,19 @@ const AppContainer = () => {
 
     const mapStateToProps = (state) => {
         let listsForRendering = [
-            state.todos.filter(item => !item.isDone).sort((a, b) => b.isStarred - a.isStarred).map(element => element.index),
-            state.todos.filter(item => item.isDone).sort((a, b) => b.isStarred - a.isStarred).map(element => element.index)
+            state.todos.filter(item => item.features.category === "todo")
+                .sort((a, b) => b.features.isStarred - a.features.isStarred).map(element => element.features.index),
+            state.todos.filter(item => item.features.category === "done")
+                .sort((a, b) => b.features.isStarred - a.features.isStarred).map(element => element.features.index)
         ]
         return { listsForRendering: listsForRendering }
     }
     const mapDispatchToProps = dispatch => {
         return {
-            saveTasks: () => {
+            saveItems: () => {
                 dispatch({ type: SAVE })
             },
-            loadTasks: () => {
+            loadItems: () => {
                 dispatch({ type: LOAD })
             }
         }

@@ -24,26 +24,23 @@ const setItemStarredAction = (index) => {
 }
 const mapDispatchToProps = dispatch => {
     return {
-        removeItem: (index, e) => {
-            if (typeof e != 'undefined')
-                e.stopPropagation();
+        removeItem: (index) => {
+
             dispatch(removeItemAction(index))
         },
-        setItemDone: (index, e) => {
-            if (typeof e != 'undefined')
-                e.stopPropagation();
+        setItemDone: (index) => {
+
             dispatch(setItemDoneAction(index))
         },
-        setItemStarred: (index, e) => {
-            // if (typeof e != 'undefined')
-            //     e.stopPropagation();
+        setItemStarred: (index) => {
+
             dispatch(setItemStarredAction(index))
         }
     }
 }
 
 const mapStateToProps = (state, props) => {
-    let taskObject = state.todos.find(element => element.index === props.index)
+    let taskObject = state.todos.find(element => element.features.index === props.index)
     return taskObject
 }
 

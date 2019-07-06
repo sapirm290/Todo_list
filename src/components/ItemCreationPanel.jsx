@@ -1,33 +1,94 @@
 import React, { useState } from 'react'
-import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import Input from '@material-ui/core/Input';
 
 const useStyles = makeStyles(theme => ({
-    root: {
+    paper: {
         backgroundColor: theme.palette.secondary.light,
+        height: "100px",
+        display: "flex"
+    },
+    button: {
+        height: '48px'
     }
-}));    
+}));
 
+// let date_utils = {
+//     months: ["January", "February", "March", "April", "May", "June", "July",
+//         "August", "September", "October", "November", "December"],
+//     days: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+//         18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+//     years: [2018, 2019, 2020, 2021, 2022]
+// };
+const HOUROPTIONS = []
+const MINUTEOPTIONS = []
+for (let index = 0; index < 24; index++) {
+    HOUROPTIONS.push(
+        <MenuItem key={"hours" + index} value={`${('0' + index).slice(-2)}`}>{`${('0' + index).slice(-2)}`}</MenuItem>
+    )
+}
+for (let index = 0; index < 61; index++) {
+    MINUTEOPTIONS.push(
+        <MenuItem key={"minutes" + index} value={`${('0' + index).slice(-2)}`}>{`${('0' + index).slice(-2)}`}</MenuItem>
+    )
+}
 
-const ItemCreationPanel = ({ addItem }) => {
+const ItemCreation = ({ addItem }) => {
+    let currentTime = new Date()
     const classes = useStyles();
-    const [task, setTask] = useState({ description: "I need to do what?...", due: "At what time? " })
+    const [item, setItem] = useState({
+        content: { summary: "", description: "" },
+        time: {
+            years: currentTime.getFullYear(), months: currentTime.getMonth(), days: currentTime.getDay(),
+            hours: currentTime.getHours(), minutes: currentTime.getMinutes()
+        }
+    })
+    const handleChange = (e, property, subProperty) => {
+        setItem({ ...item, [property]: { ...item[property], [subProperty]: e.target.value } })
+    }
     return (
         <div>
-            <Box color="secondary" className={classes.root} p={3} m={2}>
-                <TextField onChange={(e) => { setTask({ ...task, description: e.target.value }) }}
-                    value={task.description}
-                />
-                <TextField
-                    onChange={(e) => { setTask({ ...task, due: e.target.value }) }}
-                    value={task.due} />
-                <Button variant="contained" color="primary" onClick={() => { addItem(task) }}>Add Item</Button>
-            </Box>
+            <Paper classes={{ root: classes.paper }} className={classes.root} p={3} m={2}>
+                <FormControl>
+                    <InputLabel htmlFor="summary">Task: </InputLabel>
+                    <Input onChange={(e) => { handleChange(e, "content", "summary") }}
+                        value={item.content.summary} placeholder={"What do I want to do?..."}
+                        input={<Input name="summary" id="summary" />}
+                    />
+                    {/* <FormControl>
+                        <InputLabel htmlFor="my-input">Email address</InputLabel>
+                        <Input id="my-input" aria-describedby="my-helper-text" />
+                    </FormControl> */}
+                </FormControl>
+                <FormControl >
+                    <InputLabel htmlFor="hours">Hour</InputLabel>
+                    <Select
+                        value={item.time.hours}
+                        onChange={(e) => { handleChange(e, "time", "hours") }}
+                        input={<Input id="hours" />} autoWidth   >
+                        {HOUROPTIONS}
+                    </Select>
+                </FormControl>
+                <FormControl >
+                    <InputLabel htmlFor="minutes">Minute</InputLabel>
+                    <Select
+                        value={item.time.minutes}
+                        onChange={(e) => { handleChange(e, "time", "minutes") }}
+                        input={<Input id="minutes" />}  >
+                        {MINUTEOPTIONS}
+                    </Select>
+                </FormControl>
+                <Button classes={{ root: classes.button }} variant="contained" color="primary" onClick={() => { addItem(item) }}>Add Item</Button>
+            </Paper>
         </div>
     )
 }
 
-export default ItemCreationPanel
+export default ItemCreation

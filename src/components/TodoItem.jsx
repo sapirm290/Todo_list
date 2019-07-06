@@ -25,24 +25,18 @@ import SendIcon from '@material-ui/icons/Send';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 
 const useStyles = makeStyles(theme => ({
-    container: {
-        listStyleType: "none"
-    },
-    root: {
-        listStyleType: "none",
-        // color: "ffffff",
-
-        // margin: "10px"
-        // textDecoration: "line-through"
-    },
-    li:{
+    li: {
         display: "block"
-    }
+    },
+    text:{textDecoration: "line-through"}
 }));
 const DIVSTYLE = { margin: "10px", borderRadius: "10px", backgroundColor: "#b0bec5" }
 
 
-const TodoItem = ({ due, description, isStarred, index, removeItem, setItemDone, setItemStarred }) => {
+const TodoItem = ({ content, time, features, removeItem, setItemDone, setItemStarred }) => {
+    const { summary, description } = content;
+    const { years, months, days, hours, minutes } = time;
+    const { index, category, isStarred } = features;
     const classes = useStyles();
 
     const [open, setOpen] = React.useState(false);
@@ -51,21 +45,21 @@ const TodoItem = ({ due, description, isStarred, index, removeItem, setItemDone,
         setOpen(!open);
     } return (
         <div style={DIVSTYLE}>
-            <ListItem button classes={{ root: classes.root, container: classes.li }} onClick={handleClick}>
+            <ListItem button classes={{ container: classes.li }} onClick={handleClick}>
                 {open ? <ExpandLess /> : <ExpandMore />}
-                <ListItemText primary={`${description} ${due}`} />
+                <ListItemText classes={category==="done"? {root: classes.text}: null} primary={`${summary} ${hours}:${minutes}`} />
                 <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="Delete" onClick={(e) => removeItem(index, e)}>
+                    <IconButton edge="end" aria-label="Delete" onClick={() => removeItem(index)}>
                         <DeleteIcon />
                     </IconButton>
-                    <Button variant="contained" color="primary" onClick={(e) => setItemDone(index, e)}>Done!</Button>
+                    <Button variant="contained" color="primary" onClick={() => setItemDone(index)}>{category === "todo"? "Done!": "Not done"}</Button>
                 </ListItemSecondaryAction>
             </ListItem>
             <Collapse in={open} timeout="auto" unmountOnExit>
-                <ListItem button onClick={handleClick} classes={{ root: classes.root, container: classes.li }}>
-                    <ListItemText primary="Starred" />
+                <ListItem button onClick={handleClick} classes={{ container: classes.li }}>
+                <ListItemText classes={category==="done"? {root: classes.text}: null} primary={`${description} ${days}/${months}/${years}`} />
                     <ListItemSecondaryAction>
-                        <IconButton onClick={(e) => setItemStarred(index, e)}>
+                        <IconButton onClick={() => setItemStarred(index)}>
                             <SvgIcon>
                                 <path fill={isStarred ? "#FFD700" : "#FFFFFF"} d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
                             </SvgIcon>

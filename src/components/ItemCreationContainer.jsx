@@ -3,7 +3,7 @@ import ItemCreationPanel from './ItemCreationPanel'
 
 const ADD = "ADD"
 const addItemAction = (itemAsObject) => {
-    return { ...itemAsObject, type: ADD }
+    return { item: itemAsObject, type: ADD }
 }
 const mapDispatchToProps = dispatch => {
     return {

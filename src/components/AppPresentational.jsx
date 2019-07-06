@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function AppPresentational({ listsForRendering, saveTasks, loadTasks }) {
+function AppPresentational({ listsForRendering, saveItems, loadItems }) {
     const classes = useStyles();
 
     //     const Box = styled.div`
@@ -51,8 +51,8 @@ function AppPresentational({ listsForRendering, saveTasks, loadTasks }) {
 
             </AppHeader>
             <Container className={classes.root} maxWidth="md" >
-                <Button onClick={saveTasks}>Save in local storage</Button>
-                <Button onClick={loadTasks}>Load</Button>
+                <Button onClick={saveItems}>Save in local storage</Button>
+                <Button onClick={loadItems}>Load</Button>
                 <ItemCreationContainer>
                 </ItemCreationContainer>
                 <Box variant="contained" color="secondary" p={3} >
