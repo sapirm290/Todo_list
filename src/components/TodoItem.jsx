@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
     },
     text:{textDecoration: "line-through"}
 }));
-const DIVSTYLE = { margin: "10px", borderRadius: "10px", backgroundColor: "#b0bec5" }
+const DIVSTYLE = { margin: "4px", borderRadius: "10px", backgroundColor: "#b0bec5" }
 
 
 const TodoItem = ({ content, time, features, removeItem, setItemDone, setItemStarred }) => {
@@ -47,7 +47,7 @@ const TodoItem = ({ content, time, features, removeItem, setItemDone, setItemSta
         <div style={DIVSTYLE}>
             <ListItem button classes={{ container: classes.li }} onClick={handleClick}>
                 {open ? <ExpandLess /> : <ExpandMore />}
-                <ListItemText classes={category==="done"? {root: classes.text}: null} primary={`${summary} ${hours}:${minutes}`} />
+                <ListItemText classes={category==="done"? {root: classes.text}: null} primary={`${summary} :  Today at ${hours}:${minutes}`} />
                 <ListItemSecondaryAction>
                     <IconButton edge="end" aria-label="Delete" onClick={() => removeItem(index)}>
                         <DeleteIcon />

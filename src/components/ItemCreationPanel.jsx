@@ -13,10 +13,15 @@ const useStyles = makeStyles(theme => ({
     paper: {
         backgroundColor: theme.palette.secondary.light,
         height: "100px",
-        display: "flex"
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
     },
     button: {
         height: '48px'
+    },
+    input:{
+        margin: "10px"
     }
 }));
 
@@ -56,9 +61,9 @@ const ItemCreation = ({ addItem }) => {
     return (
         <div>
             <Paper classes={{ root: classes.paper }} className={classes.root} p={3} m={2}>
-                <FormControl>
+                <FormControl classes={{root: classes.input}}>
                     <InputLabel htmlFor="summary">Task: </InputLabel>
-                    <Input onChange={(e) => { handleChange(e, "content", "summary") }}
+                    <Input  onChange={(e) => { handleChange(e, "content", "summary") }}
                         value={item.content.summary} placeholder={"What do I want to do?..."}
                         input={<Input name="summary" id="summary" />}
                     />
@@ -67,7 +72,7 @@ const ItemCreation = ({ addItem }) => {
                         <Input id="my-input" aria-describedby="my-helper-text" />
                     </FormControl> */}
                 </FormControl>
-                <FormControl >
+                <FormControl  classes={{root: classes.input}}>
                     <InputLabel htmlFor="hours">Hour</InputLabel>
                     <Select
                         value={item.time.hours}
@@ -76,7 +81,7 @@ const ItemCreation = ({ addItem }) => {
                         {HOUROPTIONS}
                     </Select>
                 </FormControl>
-                <FormControl >
+                <FormControl classes={{root: classes.input}} >
                     <InputLabel htmlFor="minutes">Minute</InputLabel>
                     <Select
                         value={item.time.minutes}

@@ -25,7 +25,7 @@ const AppContainer = () => {
         let newState;
         switch (action.type) {
             case (SAVE):
-                localStorage.saveCopy = JSON.stringify(initialState)
+                localStorage.saveCopy = JSON.stringify(state)
                 return state
             case (LOAD):
                 if (localStorage.hasOwnProperty("saveCopy"))
@@ -45,9 +45,8 @@ const AppContainer = () => {
                 return newState
             case (REMOVE):
                 newState = Object.assign({}, state)
-                let indexToRemove = newState.todos.indexOf(element => element.features.index === action.index)
+                let indexToRemove = newState.todos.indexOf(newState.todos.find(element => element.features.index === action.index))
                 newState.todos.splice(indexToRemove, 1)
-                console.log(newState);
                 return newState;
             case (SETDONE):
                 newState = Object.assign({}, state)
@@ -55,6 +54,7 @@ const AppContainer = () => {
                 newState.todos[indexToSetDone].features.category = newState.todos[indexToSetDone].features.category === "todo" ? "done" : "todo";
                 return newState
             case (SETSTARRED):
+                console.log("getting starred" + action.index)
                 newState = Object.assign({}, state)
                 let indexToSetStarred = newState.todos.indexOf(newState.todos.find(element => element.features.index === action.index))
                 newState.todos[indexToSetStarred].features.isStarred = !newState.todos[indexToSetStarred].features.isStarred;
